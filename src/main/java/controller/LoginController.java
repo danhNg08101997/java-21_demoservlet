@@ -29,10 +29,13 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html;charset=UTF-8");
         Connection connection = null;
+        // Bước 1: Lấy tham số email và password người dùng nhập bên form
         String email = req.getParameter("email");
         String password = req.getParameter("password");
 
+        // Bước 2: viết câu query
         String sql = "select * from users u where u.email = ? and u.password = ?";
+
         //Bước 3: đứa câu query vào statement để thực thi
         try {
             connection = MySqlConfig.getConnection();
@@ -40,12 +43,14 @@ public class LoginController extends HttpServlet {
             // Truyền tham số cho dấu ? trong câu query
             statement.setString(1, email);
             statement.setString(2, password);
+
             // Bước 4: thực thi câu query
             // statement có 2 loại thực thi
             // excuteQuery: khi câu query là câu select;
             // excuteUpdate: insert, update, delete,...;
            ResultSet resultSet = statement.executeQuery();
             List<UserModel> list = new ArrayList<>();
+
             // Bước 5 duyệt dữ liệu trong ResultSet và lưu vào trong list userModel
             while(resultSet.next()){
                 UserModel userModel = new UserModel();
@@ -61,7 +66,7 @@ public class LoginController extends HttpServlet {
             PrintWriter writer = resp.getWriter();
             writer.println(isSuccess?"Login Success":"Login Fail");
             writer.close();
-            System.out.println("Kiem tra: " + list.size());
+            System.out.println("Kiểm tra: " + list.size());
         } catch (Exception e){
             System.out.println("Lỗi thực thi query login: " + e.getMessage());
         }finally {

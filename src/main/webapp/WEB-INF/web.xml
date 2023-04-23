@@ -5,7 +5,6 @@
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
 
-
 <!--&lt;!&ndash; Đăng ký servlet cho container &ndash;&gt;-->
 <!--  <servlet>-->
 <!--    <servlet-name>loginServlet</servlet-name>-->
