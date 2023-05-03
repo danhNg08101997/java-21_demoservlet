@@ -6,9 +6,7 @@ import model.UserModel;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -22,6 +20,45 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        Cách khởi tạo cookie
+//         Cookie cookie = new Cookie("email", "nguyenvana");
+//        Yêu cầu client khởi tạo cookie
+//         resp.addCookie(cookie);
+
+//        Cookie[] cookies = req.getCookies();
+//        for(Cookie item : cookies) {
+//            if(item.getName().equals("email")){
+//                System.out.println("Kiểm tra cookie: " + item.getValue());
+//            }
+//        }
+
+//      Khởi tạo session
+//        HttpSession session = req.getSession();
+//        session.setAttribute("password", "123456");
+//        System.out.println("Session: " + session.getAttribute("password"));
+
+        /*
+        * Tạo ra checkbox nhớ mật khẩu, khi người dùng click chọn checkbox
+        * thì khi đăng nhập thành công sẽ lưu lại giá trị đăng nhập là email, pass
+        *
+        * Khi quay lại màn hình login thì tự động điền email và pass
+        * */
+//        Ghi nhớ mật khẩu
+        Cookie[] cookies = req.getCookies();
+        String email = "";
+        String password = "";
+        for(Cookie item:cookies) {
+            if (item.getName().equals("email")){
+                email = item.getValue();
+            }
+            if (item.getName().equals("password")) {
+                password = item.getValue();
+            }
+        }
+//        Trả giá trị ra màn hình
+        req.setAttribute("email", email);
+        req.setAttribute("password", password);
+
         req.getRequestDispatcher("login.jsp").forward(req,resp);
     }
 
@@ -32,6 +69,8 @@ public class LoginController extends HttpServlet {
         // Bước 1: Lấy tham số email và password người dùng nhập bên form
         String email = req.getParameter("email");
         String password = req.getParameter("password");
+        // ghi nhớ mật khẩu
+        String rememberAcc = (String) req.getParameter("checkboxLoginName");
 
         // Bước 2: viết câu query
         String sql = "select * from users u where u.email = ? and u.password = ?";
@@ -63,9 +102,19 @@ public class LoginController extends HttpServlet {
                 list.add(userModel);
             }
             boolean isSuccess = list.size() > 0;
+//            Ghi nhớ mật khẩu
+            if(isSuccess && rememberAcc != null){
+//            Lưu cookie
+                Cookie cEmail = new Cookie("email", email);
+                Cookie cPassword = new Cookie("password", password);
+                resp.addCookie(cEmail);
+                resp.addCookie(cPassword);
+            }
+
             PrintWriter writer = resp.getWriter();
             writer.println(isSuccess?"Login Success":"Login Fail");
             writer.close();
+
             System.out.println("Kiểm tra: " + list.size());
         } catch (Exception e){
             System.out.println("Lỗi thực thi query login: " + e.getMessage());
@@ -79,6 +128,5 @@ public class LoginController extends HttpServlet {
 
             }
         }
-
     }
 }

@@ -78,11 +78,15 @@
                     <div class="form-group">
                         <label>Email</label>
                         <%-- name phải trùng với parameter mới lấy được giá trị--%>
-                        <input type="email" class="form-control" name="email">
+                        <input type="email" class="form-control" name="email" value="${email}"/>
                     </div>
                     <div class="form-group">
                         <label>Mật khẩu</label>
-                        <input type="password" class="form-control" name="password">
+                        <input type="password" class="form-control" name="password" value="${password}"/>
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="checkboxLoginId" name="checkboxLoginName">
+                        <label class="form-check-label" for="checkboxLoginId">Ghi nhớ mật khẩu?</label>
                     </div>
                     <button type="submit" class="btn btn-primary">Đăng nhập</button>
                 </form>
