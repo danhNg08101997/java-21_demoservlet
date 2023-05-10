@@ -129,7 +129,7 @@
                     <h4 class="page-title">Danh sách thành viên</h4>
                 </div>
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12 text-right">
-                    <a href="user-add.jsp" class="btn btn-sm btn-success">Thêm mới</a>
+                    <a href="<c:url value="/user/add"/>" class="btn btn-sm btn-success">Thêm mới</a>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -159,7 +159,7 @@
                                         <td></td>
                                         <td>
                                             <a href="#" class="btn btn-sm btn-primary">Sửa</a>
-                                            <a href="#" class="btn btn-sm btn-danger">Xóa</a>
+                                            <span userId = "${item.getId()}" class="btn btn-sm btn-danger btn-delete-user">Xóa</span>
                                             <a href="user-details.html" class="btn btn-sm btn-info">Xem</a>
                                         </td>
                                     </tr>
@@ -192,11 +192,11 @@
 <script src="js/waves.js"></script>
 <!-- Custom Theme JavaScript -->
 <script src="js/custom.min.js"></script>
+<script src="<c:url value="/js/user-table.js"/>"></script>
 <script>
     $(document).ready(function () {
         $('#example').DataTable();
     });
 </script>
 </body>
-
 </html>

@@ -5,7 +5,6 @@ import model.UserModel;
 import repository.RoleRepository;
 import repository.UserRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserService {
@@ -20,7 +19,11 @@ public class UserService {
         return roleRepository.findAllRoles();
     }
 
-    public boolean insertUser(String fullName, String email, String password, int roleId) {
-        return userRepository.insertUser(fullName, email, password, roleId);
+    public void insertUser(String fullName, String email, String password, int roleId) {
+        userRepository.insertUser(fullName, email, password, roleId);
+    }
+
+    public boolean deleteUser(int id){
+        return userRepository.deleteById(id);
     }
 }

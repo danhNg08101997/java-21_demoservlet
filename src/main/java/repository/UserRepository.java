@@ -29,8 +29,6 @@ public class UserRepository {
                 // lấy giá trị cột chỉ định và lưu vào object
                 userModel.setId(resultSet.getInt("id"));
                 userModel.setEmail(resultSet.getString("email"));
-                userModel.setFullname(resultSet.getString("fullName"));
-                userModel.setRoleId(resultSet.getInt("role_id"));
 
                 userModelList.add(userModel);
             }
@@ -83,16 +81,15 @@ public class UserRepository {
         return userModelList;
     }
 
-    public boolean insertUser(String fullName, String email, String password, int roleId) {
+    public void insertUser(String fullName, String email, String password, int roleId) {
         Connection connection = null;
         boolean isSuccess = false;
         try {
             connection = MySqlConfig.getConnection();
 
-            String sql = "INSERT INTO users(email,password,fullname,role_id) values (?,?,?,?)";
+            String sql = "insert into users(email,password,fullname,role_id) values (?,?,?,?)";
 
             PreparedStatement statement = connection.prepareStatement(sql);
-
             statement.setString(1, email);
             statement.setString(2, password);
             statement.setString(3,fullName);
@@ -102,13 +99,42 @@ public class UserRepository {
             isSuccess = count > 0;
 
         }catch (Exception e){
-            System.out.println("Error Query insertUser " + e.getMessage());
+            System.out.println("Error Query InsertUser " + e.getMessage());
         }finally {
             if (connection != null ){
                 try{
                     connection.close();
                 }catch (Exception e){
                     System.out.println("Lỗi đóng kết nối InsertUser: " + e.getMessage());
+                }
+            }
+        }
+    }
+
+    public boolean deleteById(int id) {
+        Connection connection = null;
+        boolean isSuccess = false;
+
+        try{
+            connection = MySqlConfig.getConnection();
+
+            String sql = "delete from users u where u.id = ?";
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
+
+            int count = statement.executeUpdate();
+            isSuccess = count > 0;
+
+        }catch (Exception e){
+            System.out.println("Error Query DeleteById: " + e.getMessage());
+
+        }finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                }catch (Exception e){
+                    System.out.println("Lỗi đóng kết nối DeleteById: " + e.getMessage());
                 }
             }
         }
