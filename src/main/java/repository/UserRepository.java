@@ -81,6 +81,7 @@ public class UserRepository {
         return userModelList;
     }
 
+    // Insert User
     public void insertUser(String fullName, String email, String password, int roleId) {
         Connection connection = null;
         boolean isSuccess = false;
@@ -111,6 +112,7 @@ public class UserRepository {
         }
     }
 
+    // Delete User
     public boolean deleteById(int id) {
         Connection connection = null;
         boolean isSuccess = false;
@@ -139,5 +141,74 @@ public class UserRepository {
             }
         }
         return isSuccess;
+    }
+
+    // Find by ID
+    public UserModel findById(int id){
+        Connection connection = null;
+        UserModel userModel = new UserModel();
+
+        try{
+            String sql = "select * from users u where u.id = ?";
+
+            connection = MySqlConfig.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, id);
+
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()){
+                // lấy giá trị cột chỉ định và lưu vào object
+                userModel.setId(resultSet.getInt("id"));
+                userModel.setEmail(resultSet.getString("email"));
+                userModel.setFullname(resultSet.getString("fullName"));
+                userModel.setRoleId(resultSet.getInt("role_id"));
+
+            }
+        }catch (Exception e){
+            System.out.println("Error findById " + e.getMessage());
+        }finally {
+            if (connection != null ){
+                try{
+                    connection.close();
+                }catch (Exception e){
+                    System.out.println("Lỗi đóng kết nối findById: " + e.getMessage());
+                }
+            }
+        }
+        return userModel;
+    }
+
+
+    // Update User
+    public void updateById(UserModel userModel) {
+        Connection connection = null;
+        boolean isSuccess = false;
+        try {
+            connection = MySqlConfig.getConnection();
+
+            String sql = "update users u set email = ?, fullname = ?, role_id = ? where id = ?";
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, userModel.getEmail());
+            statement.setString(2,userModel.getFullname());
+            statement.setInt(3, userModel.getRoleId());
+            statement.setInt(4, userModel.getId());
+
+            int count = statement.executeUpdate();
+            isSuccess = count > 0;
+
+        }catch (Exception e){
+            System.out.println("Error Query UpdateById " + e.getMessage());
+        }finally {
+            if (connection != null ){
+                try{
+                    connection.close();
+                }catch (Exception e){
+                    System.out.println("Lỗi đóng kết nối UpdateById: " + e.getMessage());
+                }
+            }
+        }
+//        return isSuccess;
     }
 }

@@ -1,6 +1,7 @@
 <%@ page isELIgnored="false" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,25 +11,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" type="image/png" sizes="16x16" href="plugins/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href= "<c:url value="/plugins/images/favicon.png"/>">
     <title>Pixel Admin</title>
     <!-- Bootstrap Core CSS -->
-    <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<c:url value="/bootstrap/dist/css/bootstrap.min.css"/>" rel="stylesheet">
     <!-- Menu CSS -->
-    <link href="plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link href="<c:url value="/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css"/>" rel="stylesheet">
     <!-- animation CSS -->
-    <link href="css/animate.css" rel="stylesheet">
+    <link href="<c:url value="/css/animate.css"/>" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="<c:url value="/css/style.css"/>" rel="stylesheet">
     <!-- color CSS -->
-    <link href="css/colors/blue-dark.css" id="theme" rel="stylesheet">
-    <link rel="stylesheet" href="./css/custom.css">
+    <link href="<c:url value="/css/colors/blue-dark.css"/>" id="theme" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="<c:url value="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"/>"></script>
+    <script src="<c:url value="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"/>"></script>
     <![endif]-->
 </head>
 
@@ -47,10 +46,10 @@
             <div class="top-left-part">
                 <a class="logo" href="index.html">
                     <b>
-                        <img src="plugins/images/pixeladmin-logo.png" alt="home" />
+                        <img src="<c:url value="/plugins/images/pixeladmin-logo.png"/>" alt="home" />
                     </b>
                     <span class="hidden-xs">
-                                <img src="plugins/images/pixeladmin-text.png" alt="home" />
+                                <img src="<c:url value="/plugins/images/pixeladmin-text.png"/>" alt="home" />
                             </span>
                 </a>
             </div>
@@ -68,11 +67,11 @@
                 <li>
                     <div class="dropdown">
                         <a class="profile-pic dropdown-toggle" data-toggle="dropdown" href="#">
-                            <img src="plugins/images/users/varun.jpg" alt="user-img" width="36" class="img-circle" />
+                            <img src="<c:url value="/plugins/images/users/varun.jpg"/>" alt="user-img" width="36" class="img-circle" />
                             <b class="hidden-xs">Cybersoft</b>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="profile.html">Thông tin cá nhân</a></li>
+                            <li><a href="<c:url value="/profile.html"/>">Thông tin cá nhân</a></li>
                             <li><a href="#">Thống kê công việc</a></li>
                             <li class="divider"></li>
                             <li><a href="#">Đăng xuất</a></li>
@@ -94,8 +93,8 @@
                                                                  aria-hidden="true"></i><span class="hide-menu">Dashboard</span></a>
                 </li>
                 <li>
-                    <a href="user-table.html" class="waves-effect"><i class="fa fa-user fa-fw"
-                                                                      aria-hidden="true"></i><span class="hide-menu">Thành viên</span></a>
+                    <a href="user-table.jsp" class="waves-effect"><i class="fa fa-user fa-fw"
+                                                                     aria-hidden="true"></i><span class="hide-menu">Thành viên</span></a>
                 </li>
                 <li>
                     <a href="role-table.jsp" class="waves-effect"><i class="fa fa-modx fa-fw"
@@ -126,50 +125,61 @@
         <div class="container-fluid">
             <div class="row bg-title">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                    <h4 class="page-title">Danh sách thành viên</h4>
+                    <h4 class="page-title">Thêm mới thành viên</h4>
                 </div>
-                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12 text-right">
-                    <a href="<c:url value="/user/add"/>" class="btn btn-sm btn-success">Thêm mới</a>
-                </div>
-                <!-- /.col-lg-12 -->
             </div>
-            <!-- /row -->
+            <!-- /.row -->
+            <!-- .row -->
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col-md-2 col-12"></div>
+                <div class="col-md-8 col-xs-12">
                     <div class="white-box">
-                        <div class="table-responsive">
-                            <table class="table" id="example">
-                                <thead>
-                                <tr>
-                                    <th>STT</th>
-                                    <th>Email</th>
-                                    <th>Fullname</th>
-                                    <th>Avatar</th>
-                                    <th>Role</th>
-                                    <th>#</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <c:forEach var="item" items="${listUser}">
-                                    <tr>
-                                        <td>${item.getId()}</td>
-                                        <td>${item.getEmail()}</td>
-                                        <td>${item.getFullname()}</td>
-                                        <td>${item.getAvatar()}</td>
-                                        <td>${item.getRoleId()}</td>
-                                        <td>
-                                            <a href="<c:url value="/user/edit?id=${item.getId()}"/>" userId = "${item.getId()}" class="btn btn-sm btn-primary btn-edit-user">Sửa</a>
-                                            <span userId = "${item.getId()}" class="btn btn-sm btn-danger btn-delete-user">Xóa</span>
-                                            <a href="user-details.html" class="btn btn-sm btn-info">Xem</a>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-
-                                </tbody>
-                            </table>
-                        </div>
+                        <form action="<c:url value="/user/edit?id=${id}"/>" method="post" class="form-horizontal form-material">
+                            <div class="form-group">
+                                <label class="col-md-12">Full Name</label>
+                                <div class="col-md-12">
+                                    <input
+                                            name="fullName"
+                                            type="text"
+                                            placeholder="Johnathan Doe"
+                                            class="form-control form-control-line"
+                                            value="${fullName}"
+                                    >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="example-email" class="col-md-12">Email</label>
+                                <div class="col-md-12">
+                                    <input type="email" placeholder="johnathan@admin.com"
+                                           class="form-control form-control-line" name="email"
+                                           id="example-email" value="${email}"> </div>
+                            </div>
+<%--                            <div class="form-group">--%>
+<%--                                <label class="col-md-12">Avatar</label>--%>
+<%--                                <div class="col-md-12">--%>
+<%--                                    <input type="text" value="avatar" class="form-control form-control-line" name="avatar">--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+                            <div class="form-group">
+                                <label class="col-sm-12">Select Role</label>
+                                <div class="col-sm-12">
+                                    <select name="role" class="form-control form-control-line">
+                                        <c:forEach var="item" items="${listRoles}">
+                                            <option value="${item.id}">${item.description}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <button type="submit" class="btn btn-success">Edit User</button>
+                                    <a href="user-table.jsp" class="btn btn-primary">Quay lại</a>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
+                <div class="col-md-2 col-12"></div>
             </div>
             <!-- /.row -->
         </div>
@@ -180,23 +190,17 @@
 </div>
 <!-- /#wrapper -->
 <!-- jQuery -->
-<script src="plugins/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="<c:url value="/plugins/bower_components/jquery/dist/jquery.min.js"/>"></script>
 <!-- Bootstrap Core JavaScript -->
-<script src="bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="<c:url value="/bootstrap/dist/js/bootstrap.min.js"/>"></script>
 <!-- Menu Plugin JavaScript -->
-<script src="plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"></script>
+<script src="<c:url value="/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"/>"></script>
 <!--slimscroll JavaScript -->
-<script src="js/jquery.slimscroll.js"></script>
-<script src="js/jquery.dataTables.js"></script>
+<script src="<c:url value="/js/jquery.slimscroll.js"/>"></script>
 <!--Wave Effects -->
-<script src="js/waves.js"></script>
+<script src="<c:url value="/js/waves.js"/>"></script>
 <!-- Custom Theme JavaScript -->
-<script src="js/custom.min.js"></script>
-<script src="<c:url value="/js/user-table.js"/>"></script>
-<script>
-    $(document).ready(function () {
-        $('#example').DataTable();
-    });
-</script>
+<script src="<c:url value="/js/custom.min.js"/>"></script>
 </body>
+
 </html>

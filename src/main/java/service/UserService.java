@@ -26,4 +26,13 @@ public class UserService {
     public boolean deleteUser(int id){
         return userRepository.deleteById(id);
     }
+
+    public UserModel getUser(int id) {
+        return userRepository.findById(id);
+    }
+
+    public void updateUser(UserModel userModel){
+         userRepository.updateById(userModel);
+    }
+
 }

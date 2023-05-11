@@ -13,5 +13,17 @@ $(document).ready(function(){
                 console.log("ket qua", result)
             });
     })
+    // $(".btn-edit-user").click(function (){
+    //     var id = $(this).attr("userId")
+    //     var This = $(this)
+    //     $.ajax({
+    //         method: "POST",
+    //         url: "http://localhost:8080/demoservlet/user/edit?id=" + id,
+    //     })
+    //         .done(function( result ) {
+    //             This.update()
+    //             console.log("ket qua", result)
+    //         });
+    // })
 
 })
